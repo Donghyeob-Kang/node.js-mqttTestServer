@@ -1,0 +1,98 @@
+<%- contentFor('body') %>
+<div id="wrapper">
+    <h1>Node.js based MQTT test server</h1>
+
+    <!-- publish area -->
+    <div>
+        <h3>Publish</h3>
+        <p>
+            <label for="url">* url: </label><input type="text" id="url" onkeyup="urlKeyUp(this.value)" /><label for="port">:</label>
+            <input type="text" id="port" onkeyup="portKeyUp(this.value)" placeholder="port number" />
+        </p>
+        <p><label for="id">id: </label><input type="text" id="id" onkeyup="idKeyUp(this.value)" /></p>
+        <p><label for="passwd">passwd: </label><input type="password" id="passwd" onkeyup="passwdKeyUp(this.value)" /></p>
+        <p><label for="topic">* topic: </label><input type="text" id="topic" onkeyup="topicKeyUp(this.value)" /></p>
+        <p><label for="msg">msg: </label><input type="text" id="msg" /></p>
+        <p><label for="timer">timer: </label><input type="text" id="timer" /></p>
+
+        <button type="button" onclick="sendData()">Send</button>
+        <button type="button">Reset</button>
+        <button type="button">Add form</button>
+        <button type="button">Delete form</button>
+    </div>
+
+    <!-- subscribe area -->
+    <div>
+        <h3>Subscribe</h3>
+        <p>
+            <label for="url">* url: </label><input type="text" id="subUrl" required /><label for="port">:</label>
+            <input type="text" id="subPort" placeholder="port number" />
+        </p>
+        <p><label for="id">id: </label><input type="text" id="subId" /></p>
+        <p><label for="passwd">passwd: </label><input type="password" id="subPasswd" /></p>
+        <p><label for="topic">* topic: </label><input type="text" id="subTopic" required /></p>
+
+        <button type="button" onclick="startSub()">Send</button>
+    </div>
+</div>
+<script>
+    const urlKeyUp = val => {
+        document.getElementById('subUrl').value = val;
+    };
+    const portKeyUp = val => {
+        document.getElementById('subPort').value = val;
+    };
+    const idKeyUp = val => {
+        document.getElementById('subId').value = val;
+    };
+    const passwdKeyUp = val => {
+        document.getElementById('subPasswd').value = val;
+    };
+    const topicKeyUp = val => {
+        document.getElementById('subTopic').value = val;
+    };
+
+    const sendData = () => {
+        const url = document.getElementById('url').value;
+        const port = document.getElementById('port').value;
+        const id = document.getElementById('id').value;
+        const passwd = document.getElementById('passwd').value;
+        const topic = document.getElementById('topic').value;
+        const msg = document.getElementById('msg').value;
+        const timer = document.getElementById('timer').value;
+
+        if (url && topic) {
+            let data = { url: url, port: port, id: id, passwd: passwd, topic: topic, msg: msg, timer: timer };
+
+            axios
+                .post('/sendData', data)
+                .then(res => {})
+                .catch(e => {
+                    console.log(e);
+                });
+        } else {
+            alert('입력 다 안함');
+        }
+    };
+
+    const startSub = () => {
+        const url = document.getElementById('url').value;
+        const port = document.getElementById('port').value;
+        const id = document.getElementById('id').value;
+        const passwd = document.getElementById('passwd').value;
+        const topic = document.getElementById('topic').value;
+
+        if (url && topic) {
+            let data = { url: url, port: port, id: id, passwd: passwd, topic: topic };
+
+            axios
+                .post('/startSub', data)
+                .then(res => {})
+                .catch(e => {
+                    console.log(e);
+                });
+        } else {
+            alert('입력 다 안함');
+        }
+    };
+</script>
