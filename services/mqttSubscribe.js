@@ -14,10 +14,11 @@ module.exports.mqttSubscribe = (mqttInfo, topic) => {
 
     client.on('message', (topic, message) => {
         console.log('subscribe done');
-        let msg = JSON.parse(message.toString());
+        let msg = JSON.parse(message);
+        // let msg = message.toString();
 
-        console.log(msg);
-        log.log(msg);
+        // console.log(msg);
+        log.logger(msg);
     });
 };
 

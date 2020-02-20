@@ -7,10 +7,12 @@ module.exports.mqttPublish = (mqttInfo, topic, msg, timer) => {
 
     const client = mqtt.connect(mqttInfo);
 
+    
+
     client.on('connect', () => {
         console.log(`mqtt publish connected: ${client.connected}`);
         if (!timer) {
-            client.publish(topic, msg);
+            client.publish(topic, JSON.stringify(msg));
         } else {
             interval = setInterval(() => {
                 client.publish(topic, msg);

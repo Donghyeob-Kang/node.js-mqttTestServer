@@ -16,9 +16,7 @@
         <p><label for="timer">timer: </label><input type="text" id="timer" /></p>
 
         <button type="button" onclick="sendData()">Send</button>
-        <button type="button">Reset</button>
-        <button type="button">Add form</button>
-        <button type="button">Delete form</button>
+        <button type="button" onclick="resetForm()">Reset</button>
     </div>
 
     <!-- subscribe area -->
@@ -95,4 +93,14 @@
             alert('입력 다 안함');
         }
     };
+
+    const resetForm = () => {
+        const url = document.getElementById('url').value = null;
+        const port = document.getElementById('port').value = null;
+        const id = document.getElementById('id').value = null;
+        const passwd = document.getElementById('passwd').value = null;
+        const topic = document.getElementById('topic').value = null;
+        const msg = document.getElementById('msg').value = null;
+        const timer = document.getElementById('timer').value = null;
+    }
 </script>
